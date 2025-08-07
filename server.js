@@ -12,7 +12,6 @@ const port = process.env.PORT || 3000;
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
-// Console logs para verificar configuración
 console.log('🔧 Configurando Supabase...');
 console.log('📍 Supabase URL:', supabaseUrl ? '✅ Configurada' : '❌ No encontrada');
 console.log('🔑 Supabase Key:', supabaseKey ? '✅ Configurada' : '❌ No encontrada');
@@ -117,7 +116,7 @@ app.get('/api/deliveries', async (req, res) => {
     const { data, error } = await supabase
       .from('usuarios')
       .select('*')
-      .eq('role', 'delivery'); // Asegúrate de que no haya filtros adicionales
+      .eq('role', 'delivery'); 
     
     if (error) {
       console.log('❌ Error consultando repartidores:', error.message);
@@ -175,15 +174,14 @@ app.get('/api/packages', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
+// ==================== RUTAS DE CREAR UN PAQUETE ====================
 app.post('/api/packages', async (req, res) => {
   try {
     console.log('📝 Creando nuevo paquete:', req.body);
     
-    // ✅ CORREGIR: Usar los nombres correctos de columnas de la base de datos
     const packageData = {
-      destinatario: req.body.destinatario,        // ✅ Cambiar de recipient_name
-      direccion: req.body.direccion,              // ✅ Cambiar de recipient_address
+      destinatario: req.body.destinatario,       
+      direccion: req.body.direccion,              
       delivery_person_id: req.body.delivery_person_id,
       status: req.body.status || 'pending',
       created_at: new Date(),
